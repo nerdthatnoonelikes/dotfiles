@@ -1,12 +1,11 @@
-#!/usr/bin/env sh
+# Basic script to kill all old bars and launch new.
 
-## Add this to your wm startup file.
-
-# Terminate already running bar instances
+# Terminate already running bad instances
 killall -q polybar
 
 # Wait until the processes have been shut down
-while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+# while grep -x polybar >/dev/null; do sleep 1; done
 
-# Launch bar1 and bar2
-polybar -c ~/.config/polybar/config.ini main &
+# Launch the example bar
+polybar main_bar
+echo "bars launched"
