@@ -1,0 +1,171 @@
+# Copyright (c) 2017-present Arctic Ice Studio <development@arcticicestudio.com>
+# Copyright (c) 2017-present Sven Greb <code@svengreb.de>
+
+# Project:    Nord Alacritty
+# Version:    0.1.0
+# Repository: https://github.com/arcticicestudio/nord-alacritty
+# License:    MIT
+# References:
+#   https://github.com/alacritty/alacritty
+
+#background_opacity: 0.8
+
+window:
+  # Window dimensions (changes require restart)
+  #
+  # Specified in number of columns/lines, not pixels.
+  # If both are `0`, this setting is ignored.
+  #dimensions:
+  #  columns: 0
+  #  lines: 0
+
+  # Window position (changes require restart)
+  #
+  # Specified in number of pixels.
+  # If the position is not set, the window manager will handle the placement.
+  #position:
+  #  x: 0
+  #  y: 0
+
+  # Window padding (changes require restart)
+  #
+  # Blank space added around the window in pixels. This padding is scaled
+  # by DPI and the specified value is always added at both opposing sides.
+  padding:
+    x: 6
+    y: 6
+
+  # Spread additional padding evenly around the terminal content.
+  #dynamic_padding: false
+
+  # Window decorations
+  #
+  # Values for `decorations`:
+  #     - full: Borders and title bar
+  #     - none: Neither borders nor title bar
+  #
+  # Values for `decorations` (macOS only):
+  #     - transparent: Title bar, transparent background and title bar buttons
+  #     - buttonless: Title bar, transparent background, but no title bar buttons
+  #decorations: full
+
+  # Startup Mode (changes require restart)
+  #
+  # Values for `startup_mode`:
+  #   - Windowed
+  #   - Maximized
+  #   - Fullscreen
+  #
+  # Values for `startup_mode` (macOS only):
+  #   - SimpleFullscreen
+  #startup_mode: Windowed
+
+  # Window title
+  title: Alacritty
+
+  # Window class (Linux/BSD only):
+  class:
+    # Application instance name
+    instance: Alacritty
+    # General application class
+    general: Alacritty
+
+  # GTK theme variant (Linux/BSD only)
+  #
+  # Override the variant of the GTK theme. Commonly supported values are `dark` and `light`.
+  # Set this to `None` to use the default theme variant.
+  #gtk_theme_variant: None
+
+scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  history: 5000
+
+  # Number of lines the viewport will move for every line scrolled when
+  # scrollback is enabled (history > 0).
+  #multiplier: 3
+
+  # Scroll to the bottom when new text is written to the terminal.
+  #auto_scroll: false
+
+# Spaces per Tab (changes require restart)
+#
+# This setting defines the width of a tab in cells.
+#
+# Some applications, like Emacs, rely on knowing about the width of a tab.
+# To prevent unexpected behavior in these applications, it's also required to
+# change the `it` value in terminfo when altering this setting.
+#tabspaces: 8
+
+# Font configuration
+
+
+
+colors:
+  primary:
+    background: '#2e3440'
+    foreground: '#d8dee9'
+    dim_foreground: '#a5abb6'
+  cursor:
+    text: '#2e3440'
+    cursor: '#d8dee9'
+  vi_mode_cursor:
+    text: '#2e3440'
+    cursor: '#d8dee9'
+  selection:
+    text: CellForeground
+    background: '#4c566a'
+  search:
+    matches:
+      foreground: CellBackground
+      background: '#88c0d0'
+    bar:
+      background: '#434c5e'
+      foreground: '#d8dee9'
+  normal:
+    black: '#3b4252'
+    red: '#bf616a'
+    green: '#a3be8c'
+    yellow: '#ebcb8b'
+    blue: '#81a1c1'
+    magenta: '#b48ead'
+    cyan: '#88c0d0'
+    white: '#e5e9f0'
+  bright:
+    black: '#4c566a'
+    red: '#bf616a'
+    green: '#a3be8c'
+    yellow: '#ebcb8b'
+    blue: '#81a1c1'
+    magenta: '#b48ead'
+    cyan: '#8fbcbb'
+    white: '#eceff4'
+  dim:
+    black: '#373e4d'
+    red: '#94545d'
+    green: '#809575'
+    yellow: '#b29e75'
+    blue: '#68809a'
+    magenta: '#8c738c'
+    cyan: '#6d96a5'
+    white: '#aeb3bb'
+    
+key_bindings:
+    # (Windows, Linux, and BSD only)
+  - { key: V,        mods: Control|Shift, action: Paste            }
+  - { key: C,        mods: Control|Shift, action: Copy             }
+  - { key: Insert,   mods: Shift,         action: PasteSelection   }
+  - { key: Key0,     mods: Control,       action: ResetFontSize    }
+  - { key: Equals,   mods: Control,       action: IncreaseFontSize }
+  - { key: Add,      mods: Control,       action: IncreaseFontSize }
+  - { key: Subtract, mods: Control,       action: DecreaseFontSize }
+  - { key: Minus,    mods: Control,       action: DecreaseFontSize }
+
+  - { key: Paste,                    action: Paste                            }
+  - { key: Copy,                     action: Copy                             }
+  - { key: L,         mods: Control, action: ClearLogNotice                   }
+  - { key: L,         mods: Control, chars: "\x0c"                            }
+  - { key: PageUp,    mods: Shift,   action: ScrollPageUp,   mode: ~Alt       }
+  - { key: PageDown,  mods: Shift,   action: ScrollPageDown, mode: ~Alt       }
+  - { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }
+  - { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt       }

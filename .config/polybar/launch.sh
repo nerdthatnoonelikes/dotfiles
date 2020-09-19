@@ -1,11 +1,15 @@
-# Basic script to kill all old bars and launch new.
+#!/usr/bin/env bash
 
-# Terminate already running bad instances
+# Terminate already running bar instances
 killall -q polybar
+# If all your bars have ipc enabled, you can also use 
+# polybar-msg cmd quit
 
-# Wait until the processes have been shut down
-# while grep -x polybar >/dev/null; do sleep 1; done
+# Launch bar1 and bar2
+echo "---" | tee -a /tmp/polybar1.log /tmp/polybar2.log
+polybar workspaces >>/tmp/polybar1.log 2>&1 &
+polybar music >>/tmp/polybar2.log 2>&1 &
+polybar status >>/tmp/polybar3.log 2>&1 &
 
-# Launch the example bar
-polybar main_bar
-echo "bars launched"
+
+echo "Bars launched..."
