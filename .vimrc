@@ -1,49 +1,20 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+call plug#begin('~/.vim/plugged')
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jiangmiao/auto-pairs'
+Plug 'ap/vim-css-color'
+Plug 'vim-syntastic/syntastic'
+Plug 'rust-lang/rust.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'morhetz/gruvbox'
+Plug 'scrooloose/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'xuyuanp/nerdtree-git-plugin'
+call plug#end()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-" lightline statusline theme
-Plugin 'itchyny/lightline.vim'
-" C++ highlighting that makes more sense
-Plugin 'octol/vim-cpp-enhanced-highlight'
-" additional solarized theme, optional
-Plugin 'altercation/vim-colors-solarized'
-" advanced surround commands
-Plugin 'tpope/vim-surround'
-" shows the specific color when a hexcode is written in languages that support
-" it
-Plugin 'ap/vim-css-color'
-" commands that check for errors
-Plugin 'vim-syntastic/syntastic'
-" default colorscheme
-Plugin 'rakr/vim-one'
-" Auto completes pairs such as {}, () etc.
-Plugin 'jiangmiao/auto-pairs'
-
-" Conqueror Of Completion
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" git repos on your local machine (i.e. when working on your own plugin)
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -215,11 +186,48 @@ map Y y$
 nnoremap <C-L> :nohl<CR><C-L>
 
 set noshowmode
+" Don't show current mode in plain text at the bottom of the page, as the    
+" statusline takes care of that    
+set noshowmode    
+     
+" Let there be no visual delay when switching between modes    
+set ttimeoutlen=10    
+     
+" I personally like the base16 airline theme. You could however find a list of    
+" all possible themes at https://github.com/vim-airline/vim-airline/wiki/Screenshots    
+let g:airline_theme = 'base16'    
+     
+" Makes it so that it does not draw separators for empty sections    
+let g:airline_skip_empty_sections = 1    
+     
+" Show tabs at the top, even if there is just one buffer open    
+let g:airline#extensions#tabline#enabled = 1
+" If set to one, displays statusline in the tabline (first top line).
+" If set to zero, displays the statusline at the bottom
+let g:airline_statusline_ontop = 0
 
-let g:lightline = {
-      \ 'colorscheme': 'one'
-      \ }
+" Make airline use powerline fonts. This requires them to be installed on your
+" machine, see: https://github.com/powerline/fonts
+let g:airline_powerline_fonts = 1
 
+" By default, the tab bars at the top are going to have vertical borders. I
+" like the separators to be angled, so I added the following lines, as is
+" recommended by :help airline-configuration
+" If there isn't a dictionary of symbols already, define it
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" Add the following symbols to the dictionary:
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.dirty='⚡'
 set background=dark
-colorscheme one
+colorscheme gruvbox
 set termguicolors
