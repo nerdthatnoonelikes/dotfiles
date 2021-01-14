@@ -1,3 +1,5 @@
+# Moved to https://gitea.com/nerdthatnoonelikes/dotfiles.git
+
 # My dotfiles
 ##### Here is my personal collection of configuration files for the programs I use, to use these configurations you must have the following programs installed, `alacritty`, `vim`, `polybar`, and `i3-gaps`
 
