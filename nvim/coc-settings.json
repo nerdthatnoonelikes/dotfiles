@@ -1,0 +1,10 @@
+{
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "json"
+  ]
+}
