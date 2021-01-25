@@ -15,6 +15,8 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
+Plug 'joshdick/onedark.vim'
+Plug 'drewtempelmeyer/palenight.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -47,6 +49,8 @@ set softtabstop=4
 set expandtab
 map Y y$
 
+let mapleader = " "
+
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 vmap <F6> :!xclip -f -sel clip<CR>
 map <F7> :-1r !xclip -o -sel clip<CR>
@@ -54,6 +58,9 @@ map <F7> :-1r !xclip -o -sel clip<CR>
 nnoremap <C-L> :nohl<CR><C-L>
 
 map <leader>n :NERDTreeToggle<CR>
+
+map <leader>q :q<CR>
+map <leader>w :wq<CR>
 
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
@@ -72,7 +79,7 @@ let g:coc_global_extensions = [
   \ ]
 
 
-let g:airline_theme = 'gruvbox'    
+let g:airline_theme = 'base16'    
      
 let g:airline_skip_empty_sections = 1    
      
