@@ -7,6 +7,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
+Plug 'joshdick/onedark.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'kien/ctrlp.vim'
@@ -15,8 +16,6 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
-Plug 'joshdick/onedark.vim'
-Plug 'drewtempelmeyer/palenight.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -62,6 +61,31 @@ map <leader>n :NERDTreeToggle<CR>
 map <leader>q :q<CR>
 map <leader>w :wq<CR>
 
+" use alt+hjkl to move between split/vsplit panels
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+" Terminal configuration
+" open new split panes to right and below
+set splitright
+set splitbelow
+" turn terminal to normal mode with escape
+tnoremap <Esc> <C-\><C-n>
+" start terminal in insert mode
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+" open terminal on ctrl+n
+function! OpenTerminal()
+  split term://zsh
+  resize 10
+endfunction
+nnoremap <c-n> :call OpenTerminal()<CR>
+
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 set noshowmode
@@ -78,8 +102,7 @@ let g:coc_global_extensions = [
   \ 'coc-snippets'
   \ ]
 
-
-let g:airline_theme = 'base16'    
+let g:airline_theme = 'onedark'    
      
 let g:airline_skip_empty_sections = 1    
      
@@ -101,6 +124,7 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.dirty='⚡'
+
 set background=dark
-colorscheme gruvbox
+colorscheme onedark 
 set termguicolors
