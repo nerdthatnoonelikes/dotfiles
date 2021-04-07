@@ -1,5 +1,5 @@
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ap/vim-css-color'
 Plug 'vim-syntastic/syntastic'
@@ -10,7 +10,8 @@ Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
-Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
@@ -50,7 +51,10 @@ map Y y$
 
 let mapleader = " "
 
+" :Prettier to format a file
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Copy things to the clipboard
 vmap <F6> :!xclip -f -sel clip<CR>
 map <F7> :-1r !xclip -o -sel clip<CR>
 
@@ -58,18 +62,21 @@ nnoremap <C-L> :nohl<CR><C-L>
 
 map <leader>n :NERDTreeToggle<CR>
 
-map <leader>q :q<CR>
-map <leader>w :wq<CR>
+" Use ctrl+hjkl to move between splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
-" use alt+hjkl to move between split/vsplit panels
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-nnoremap <A-h> <C-w>h
-nnoremap <A-j> <C-w>j
-nnoremap <A-k> <C-w>k
-nnoremap <A-l> <C-w>l
+nnoremap <C-p> :FZF<CR>
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit'
+  \}
+
+" Requires https://github.com/ggreer/the_silver_searcher
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " Terminal configuration
 " open new split panes to right and below
@@ -86,23 +93,24 @@ function! OpenTerminal()
 endfunction
 nnoremap <c-n> :call OpenTerminal()<CR>
 
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
 set noshowmode
 set noshowmode    
      
 set ttimeoutlen=10    
     
+" All global extensions that I use
 let g:coc_global_extensions = [
   \ 'coc-tsserver',
   \ 'coc-prettier', 
   \ 'coc-json',
   \ 'coc-rust-analyzer',
   \ 'coc-pairs',
-  \ 'coc-snippets'
+  \ 'coc-snippets',
+  \ 'coc-docker',
+  \ 'coc-discord-rpc'
   \ ]
 
-let g:airline_theme = 'onedark'    
+let g:airline_theme = 'gruvbox'    
      
 let g:airline_skip_empty_sections = 1    
      
@@ -126,5 +134,5 @@ let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.dirty='⚡'
 
 set background=dark
-colorscheme onedark 
+colorscheme gruvbox 
 set termguicolors
