@@ -4,19 +4,19 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ap/vim-css-color'
 Plug 'vim-syntastic/syntastic'
 Plug 'rust-lang/rust.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'morhetz/gruvbox'
-Plug 'joshdick/onedark.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'itchyny/lightline.vim'
+Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
+Plug 'akinsho/nvim-bufferline.lua'
 Plug 'ryanoasis/vim-devicons'
+Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
+Plug 'maxmellon/vim-jsx-pretty' " prettier jsx 
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 call plug#end()
 
 filetype plugin indent on
@@ -107,32 +107,26 @@ let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-snippets',
   \ 'coc-docker',
-  \ 'coc-discord-rpc'
+  \ 'coc-discord-rpc',
+  \ 'coc-pyright'
   \ ]
 
-let g:airline_theme = 'gruvbox'    
-     
-let g:airline_skip_empty_sections = 1    
-     
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_statusline_ontop = 0
+let g:lightline = { 'colorscheme': 'material_vim' }
 
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+" For Neovim 0.1.3 and 0.1.4 - https://github.com/neovim/neovim/pull/2198
+if (has('nvim'))
+  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
 
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = '☰'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.dirty='⚡'
+" For Neovim > 0.1.5 and Vim > patch 7.4.1799 - https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
+" Based on Vim patch 7.4.1770 (`guicolors` option) - https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
+" https://github.com/neovim/neovim/wiki/Following-HEAD#20160511
+if (has('termguicolors'))
+  set termguicolors
+endif
 
-set background=dark
-colorscheme gruvbox 
-set termguicolors
+lua require'bufferline'.setup{}
+
+
+let g:material_terminal_italics = 1
+colorscheme material

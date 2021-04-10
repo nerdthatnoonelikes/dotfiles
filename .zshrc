@@ -1,6 +1,5 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="/home/nerd/.oh-my-zsh"
 
@@ -8,11 +7,13 @@ export ZSH="/home/nerd/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="bira"
-alias vim="nvim"
-alias ubuntu="ssh ubuntu@10.0.0.145"
-alias l='exa --long'
-alias backup="python ~/backup.py"
+ZSH_THEME="pi"
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+source $HOME/.cargo/env
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -48,6 +49,8 @@ alias backup="python ~/backup.py"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
+# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -73,8 +76,7 @@ alias backup="python ~/backup.py"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    zsh-syntax-highlighting
-    zsh-autosuggestions
+    vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
