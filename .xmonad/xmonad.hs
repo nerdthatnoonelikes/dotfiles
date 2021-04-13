@@ -114,7 +114,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
-    , ((modm .|. shiftMask, xK_x     ), io (exitWith ExitSuccess))
+    , ((modm .|. shiftMask, xK_e     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
     , ((modm              , xK_o     ), spawn "xmonad --recompile; xmonad --restart")
@@ -235,7 +235,11 @@ myLogHook = return ()
 --
 -- By default, do nothing.
 myStartupHook = do
-           spawnOnce "feh --bg-scale ~/Downloads/pog2.jpg"
+           -- No more feh >:D
+           -- spawnOnce "feh --bg-scale ~/Downloads/pog2.jpg"
+           spawn "nitrogen --restore"
+           spawn "nm-applet"
+           spawn "~/.config/polybar/launch.sh"
            spawnOnce "picom -b"
 
 ------------------------------------------------------------------------
@@ -246,7 +250,8 @@ myStartupHook = do
 --
 
 main = do
-    xmproc <- spawnPipe "xmobar ~/.xmobarrc"
+    -- I use polybar, no more xmobar >:D
+    -- xmproc <- spawnPipe "xmobar ~/.xmobarrc"
     xmonad $ docks defaults
 
 -- A structure containing your configuration settings, overriding
