@@ -4,6 +4,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ap/vim-css-color'
 Plug 'vim-syntastic/syntastic'
 Plug 'rust-lang/rust.vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
@@ -16,7 +17,8 @@ Plug 'maxmellon/vim-jsx-pretty' " prettier jsx
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
-Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+Plug 'mhinz/vim-startify'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -48,11 +50,24 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 map Y y$
-
 let mapleader = " "
+
+autocmd VimEnter * lua require "bufferline".setup{}
 
 " :Prettier to format a file
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Use tab for trigger completion
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " Copy things to the clipboard
 vmap <F6> :!xclip -f -sel clip<CR>
@@ -75,6 +90,9 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit'
   \}
 
+nmap <F2> :BufferLineCycleNext<CR>
+nmap <F3> :BufferLineCyclePrev<CR>
+
 " Requires https://github.com/ggreer/the_silver_searcher
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
@@ -94,7 +112,6 @@ endfunction
 nnoremap <c-n> :call OpenTerminal()<CR>
 
 set noshowmode
-set noshowmode    
      
 set ttimeoutlen=10    
     
@@ -108,25 +125,56 @@ let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-docker',
   \ 'coc-discord-rpc',
-  \ 'coc-pyright'
+  \ 'coc-pyright',
+  \ 'coc-go'
   \ ]
 
-let g:lightline = { 'colorscheme': 'material_vim' }
+let g:lightline = {
+       \ 'colorscheme': 'one',
+       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2"  },
+       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3"  }
+       \ }
 
-" For Neovim 0.1.3 and 0.1.4 - https://github.com/neovim/neovim/pull/2198
+" Go syntax highlighting
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+
+" Auto formatting and importing
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
+
+" Status line types/signatures
+let g:go_auto_type_info = 1
+
+" Run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+" Map keys for most used commands.
+" Ex: `\b` for building, `\r` for running and `\b` for running test.
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>t  <Plug>(go-test
+
+let g:startify_custom_header = startify#center([
+\ 'welcome back nerd.',
+\ ])
+
 if (has('nvim'))
   let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
 
-" For Neovim > 0.1.5 and Vim > patch 7.4.1799 - https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
-" Based on Vim patch 7.4.1770 (`guicolors` option) - https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
-" https://github.com/neovim/neovim/wiki/Following-HEAD#20160511
 if (has('termguicolors'))
   set termguicolors
 endif
 
-lua require'bufferline'.setup{}
-
-
-let g:material_terminal_italics = 1
-colorscheme material
+colorscheme onedark 
