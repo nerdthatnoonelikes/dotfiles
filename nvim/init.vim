@@ -22,10 +22,13 @@ Plug 'joshdick/onedark.vim'
 call plug#end()
 
 filetype plugin indent on
-set nocompatible
 filetype indent plugin on
+
 syntax on
+
+set termguicolors
 set hidden
+set nocompatible
 set wildmenu
 set showcmd
 set hlsearch
@@ -49,72 +52,37 @@ set pastetoggle=<F11>
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+" Stops neovim from changing the cursor in alacritty
+set guicursor=
+
+" Terminal configuration
+" open new split panes to right and below
+set splitright
+set splitbelow
+set noshowmode
+set ttimeoutlen=10  
 map Y y$
-let mapleader = " "
-
-autocmd VimEnter * lua require "bufferline".setup{}
-
-" :Prettier to format a file
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-" Use tab for trigger completion
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Copy things to the clipboard
-vmap <F6> :!xclip -f -sel clip<CR>
-map <F7> :-1r !xclip -o -sel clip<CR>
+" Does what it says
+function! OpenTerminal()
+  split term://zsh
+  resize 10
+endfunction
 
-nnoremap <C-L> :nohl<CR><C-L>
-
-map <leader>n :NERDTreeToggle<CR>
-
-" Use ctrl+hjkl to move between splits
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-nnoremap <C-p> :FZF<CR>
+" Set leader
+let mapleader = " "
+" Fzf config
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-s': 'split',
   \ 'ctrl-v': 'vsplit'
   \}
-
-nmap <F2> :BufferLineCycleNext<CR>
-nmap <F3> :BufferLineCyclePrev<CR>
-
-" Requires https://github.com/ggreer/the_silver_searcher
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-
-" Terminal configuration
-" open new split panes to right and below
-set splitright
-set splitbelow
-" turn terminal to normal mode with escape
-tnoremap <Esc> <C-\><C-n>
-" start terminal in insert mode
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-" open terminal on ctrl+n
-function! OpenTerminal()
-  split term://zsh
-  resize 10
-endfunction
-nnoremap <c-n> :call OpenTerminal()<CR>
-
-set noshowmode
-     
-set ttimeoutlen=10    
-    
 " All global extensions that I use
 let g:coc_global_extensions = [
   \ 'coc-tsserver',
@@ -129,6 +97,7 @@ let g:coc_global_extensions = [
   \ 'coc-go'
   \ ]
 
+" Light line configuration
 let g:lightline = {
        \ 'colorscheme': 'one',
        \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2"  },
@@ -149,32 +118,48 @@ let g:go_fmt_command = "goimports"
 " Status line types/signatures
 let g:go_auto_type_info = 1
 
-" Run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#test#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
-" Map keys for most used commands.
-" Ex: `\b` for building, `\r` for running and `\b` for running test.
-autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
-autocmd FileType go nmap <leader>t  <Plug>(go-test
-
+" Custom startify message :D
 let g:startify_custom_header = startify#center([
 \ 'welcome back nerd.',
 \ ])
 
-if (has('nvim'))
-  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-endif
 
-if (has('termguicolors'))
-  set termguicolors
-endif
+" Auto start the buffer line 
+autocmd VimEnter * lua require "bufferline".setup{}
+
+" :Prettier to format a file
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+" Use tab for trigger completion
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Copy things to the clipboard
+vmap <F6> :!xclip -f -sel clip<CR>
+map <F7> :-1r !xclip -o -sel clip<CR>
+
+nnoremap <C-L> :nohl<CR><C-L>
+
+map <leader>n :NERDTreeToggle<CR>
+
+" Use ctrl+hjkl to move between splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+nnoremap <C-p> :FZF<CR>
+
+nmap <F2> :BufferLineCycleNext<CR>
+nmap <F3> :BufferLineCyclePrev<CR>
+" turn terminal to normal mode with escape
+tnoremap <Esc> <C-\><C-n>
+" start terminal in insert mode
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+" open terminal on ctrl+n
+nnoremap <c-n> :call OpenTerminal()<CR>  
 
 colorscheme onedark 
