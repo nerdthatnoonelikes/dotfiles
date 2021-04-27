@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+# Set the brightness of a screen
+
+# Example:
+# ./set-brightness.sh eDP-1 0.5
+# Sets the screen brightness to 0.5
+
+xrandr --output $1 --brightness $2
