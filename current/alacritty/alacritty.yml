@@ -1,0 +1,108 @@
+# background_opacity: 0.90
+
+env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  TERM: "xterm-256color"
+
+window:
+  # Window padding (changes require restart)
+  #
+  # Blank space added around the window in pixels. This padding is scaled
+  # by DPI and the specified value is always added at both opposing sides.
+  padding:
+    x: 15
+    y: 15
+
+scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  history: 1000
+
+  # Scrolling distance multiplier.
+  multiplier: 3
+
+# Font configuration
+font:
+  # Normal (roman) font face
+  normal:
+    # Font family
+    #
+    # Default:
+    #   - (macOS) Menlo
+    #   - (Linux/BSD) monospace
+    #   - (Windows) Consolas
+    family: "Iosevka Nerd Font"
+
+    # The `style` can be specified to pick a specific face.
+    #style: Regular
+
+  # Bold font face
+  bold:
+    # Font family
+    #
+    # If the bold family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: "Iosevka Nerd Font"
+
+    # The `style` can be specified to pick a specific face.
+    #style: Bold
+
+  # Italic font face
+  italic:
+    # Font family
+    #
+    # If the italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: "Iosevka Nerd Font"
+
+    # The `style` can be specified to pick a specific face.
+    #style: Italic
+
+  # Point size
+  size: 12
+
+
+# Colors (Gruvbox Dark)
+colors:
+  bright:
+    black: '#7f7061'
+    blue: '#719586'
+    cyan: '#7db669'
+    green: '#aab01e'
+    magenta: '#c77089'
+    red: '#f73028'
+    white: '#e6d4a3'
+    yellow: '#f7b125'
+  cursor:
+    cursor: '#e6d4a3'
+    text: '#1e1e1e'
+  normal:
+    black: '#1e1e1e'
+    blue: '#377375'
+    cyan: '#578e57'
+    green: '#868715'
+    magenta: '#a04b73'
+    red: '#be0f17'
+    white: '#978771'
+    yellow: '#cc881a'
+  primary:
+    background: '#1e1e1e'
+    foreground: '#e6d4a3'
+  selection:
+    background: '#e6d4a3'
+    text: '#534a42'
+
+
+cursor:
+  # Cursor style
+  #
+  # Values for `style`:
+  #   - ▇ Block
+  #   - _ Underline
+  #   - | Beam
+  style: "Block"
